@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Southland Forge — Edit your site</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23141414'/%3E%3Ctext x='16' y='23' font-family='Arial Black,Arial' font-size='17' font-weight='900' fill='%23b8bcc2' text-anchor='middle'%3ESF%3C/text%3E%3Ccircle cx='25' cy='8' r='2.4' fill='%23ff6b1a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#141414;--ink2:#1a1a1a;--panel:#1c1c1c;--field:#0f0f0f;
+  --steel:#b8bcc2;--steel2:#8a8f96;--white:#f5f5f5;--muted:#9a9ea4;
+  --orange:#ff6b1a;--orange2:#f7560a;--line:rgba(245,245,245,.1);
+  --ok:#6fcf73;--err:#ff9d9d;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --head:'Oswald',var(--sans);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--ink);color:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+h1,h2{font-family:var(--head);font-weight:600;letter-spacing:.01em}
+.hidden{display:none!important}
+a{color:var(--orange)}
+.wrap{max-width:780px;margin:0 auto;padding:24px 20px 90px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--head);font-weight:700;letter-spacing:.05em;line-height:.95}
+.brand b{color:var(--orange)}
+.brand small{display:block;font-weight:400;font-size:.55rem;letter-spacing:.32em;color:var(--steel2);margin-top:2px}
+.brand svg{width:34px;height:36px;flex:0 0 auto}
+
+.login-shell{min-height:100svh;display:grid;place-items:center;padding:20px}
+.card{width:100%;max-width:410px;background:var(--ink2);border:1px solid var(--line);border-radius:14px;padding:32px 28px;
+  box-shadow:0 24px 60px rgba(0,0,0,.5);position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--orange),var(--orange2))}
+.card h1{font-size:1.5rem;margin:6px 0 2px;text-transform:uppercase}
+.card .sub{color:var(--muted);font-size:.9rem;margin-bottom:18px}
+label{display:block;font-family:var(--head);text-transform:uppercase;letter-spacing:.1em;font-size:.72rem;color:var(--steel2);margin:14px 0 6px}
+input,textarea{width:100%;background:var(--field);border:1px solid var(--line);border-radius:8px;color:var(--white);font:inherit;padding:11px 13px;transition:border-color .2s}
+input:focus,textarea:focus{outline:none;border-color:var(--orange)}
+textarea{resize:vertical;min-height:64px;line-height:1.5}
+.btn{font-family:var(--head);text-transform:uppercase;letter-spacing:.1em;font-weight:600;font-size:.9rem;padding:.85em 1.5em;border-radius:6px;cursor:pointer;border:none;transition:transform .2s,box-shadow .2s,background .2s}
+.btn-primary{background:linear-gradient(180deg,var(--orange),var(--orange2));color:#1a0d00;box-shadow:0 10px 26px rgba(247,86,10,.32)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(247,86,10,.5)}
+.btn-primary:disabled{opacity:.55;cursor:default;transform:none}
+.btn-steel{background:transparent;color:var(--white);border:1.5px solid var(--line)}
+.btn-steel:hover{border-color:var(--steel)}
+.notice{border-radius:8px;padding:10px 13px;font-size:.9rem;margin:12px 0}
+.notice.err{background:rgba(247,86,10,.12);border:1px solid rgba(247,86,10,.5);color:var(--err)}
+
+.topbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.topbar .spacer{flex:1}
+.who{color:var(--muted);font-size:.85rem}
+.lead{color:var(--muted);font-size:.92rem;margin-bottom:18px}
+.panel{background:var(--ink2);border:1px solid var(--line);border-radius:12px;padding:20px 20px 22px;margin-top:18px}
+.panel h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:4px}
+.svc-block{border:1px solid var(--line);border-radius:10px;padding:14px;margin-top:14px}
+.photo-block{display:flex;gap:16px;align-items:center;margin-top:14px;flex-wrap:wrap}
+.photo-thumb{width:122px;height:84px;border-radius:8px;object-fit:cover;border:1px solid var(--line);background:var(--field);flex:0 0 auto}
+.photo-ph{width:122px;height:84px;border-radius:8px;border:1px dashed var(--line);background:repeating-linear-gradient(94deg,rgba(255,255,255,.02) 0 1px,transparent 1px 4px),linear-gradient(135deg,#2a2c30,#161718);display:grid;place-items:center;font-family:var(--head);text-transform:uppercase;letter-spacing:.12em;font-size:.6rem;color:var(--steel2);flex:0 0 auto;text-align:center;padding:6px}
+.photo-block .pf{flex:1;min-width:200px}
+.photo-block .pf .name{font-family:var(--head);text-transform:uppercase;letter-spacing:.08em;font-size:.78rem;color:var(--white)}
+.upstate{font-size:.82rem;color:var(--muted);margin-top:4px}
+input[type=file]{font-size:.85rem;padding:8px;margin-top:6px}
+.savebar{position:sticky;bottom:0;background:linear-gradient(transparent,var(--ink) 42%);padding:22px 0 6px;margin-top:26px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.savebar .spacer{flex:1}
+.muted{color:var(--muted);font-size:.82rem}
+</style>
+</head>
+<body>
+
+<!-- ===== LOGIN ===== -->
+<div id="view-login" class="login-shell">
+  <form class="card" id="login-form">
+    <h1>Southland Forge</h1>
+    <div class="sub">Sign in to edit your website.</div>
+    <div id="login-error" class="notice err hidden"></div>
+    <label for="email">Email</label>
+    <input id="email" type="email" required autocomplete="username" placeholder="you@example.com">
+    <label for="password">Password</label>
+    <input id="password" type="password" required autocomplete="current-password" placeholder="••••••••">
+    <button class="btn btn-primary" type="submit" id="login-btn" style="width:100%;margin-top:20px">Sign in</button>
+  </form>
+</div>
+
+<!-- ===== EDITOR ===== -->
+<main id="view-editor" class="wrap hidden">
+  <div class="topbar">
+    <span class="brand">
+      <svg viewBox="0 0 120 128" aria-hidden="true">
+        <defs>
+          <linearGradient id="st" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eef0f2"/><stop offset=".5" stop-color="#aab0b6"/><stop offset="1" stop-color="#6d7278"/></linearGradient>
+          <linearGradient id="st2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b8bcc2"/><stop offset="1" stop-color="#5c6066"/></linearGradient>
+          <linearGradient id="sp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffb066"/><stop offset="1" stop-color="#f7560a"/></linearGradient>
+        </defs>
+        <path d="M14 46 L34 22 L48 39 L66 15 L86 41 L106 24 L106 52 L14 52 Z" fill="url(#st2)" opacity=".5"/>
+        <text x="60" y="98" text-anchor="middle" font-family="Oswald,Arial" font-weight="700" font-size="56" fill="url(#st)" stroke="#2a2d31" stroke-width="1.2">SF</text>
+        <path d="M30 108 h60 v7 h-13 l3 9 h-40 l3 -9 h-13 z" fill="url(#st2)"/>
+        <g fill="url(#sp)"><circle cx="94" cy="20" r="3.4"/><circle cx="103" cy="31" r="2"/></g>
+      </svg>
+      <span>SOUTHLAND <b>FORGE</b><small>EDITOR</small></span>
+    </span>
+    <span class="spacer"></span>
+    <span class="who" id="who"></span>
+    <a class="btn btn-steel" id="view-site" href="../" target="_blank" style="text-decoration:none">View site ↗</a>
+    <button class="btn btn-steel" id="logout">Log out</button>
+  </div>
+  <p class="lead">Change any text or photo below, then hit <b>Save changes</b>. Your live site updates straight away.</p>
+  <div id="editor-error" class="notice err hidden"></div>
+
+  <div class="panel">
+    <h2>Headline &amp; contact</h2>
+    <label for="f-tagline">Tagline (under the logo)</label>
+    <input id="f-tagline" type="text">
+    <label for="f-headline">Headline</label>
+    <input id="f-headline" type="text">
+    <label for="f-pitch">Pitch line</label>
+    <input id="f-pitch" type="text">
+    <label for="f-phone">Phone number</label>
+    <input id="f-phone" type="text">
+    <label for="f-email">Email</label>
+    <input id="f-email" type="text">
+    <label for="f-area">Service area</label>
+    <input id="f-area" type="text">
+  </div>
+
+  <div class="panel">
+    <h2>Services</h2>
+    <div id="services"></div>
+  </div>
+
+  <div class="panel">
+    <h2>Photos</h2>
+    <div id="photos"></div>
+    <p class="muted" style="margin-top:14px">JPG, PNG or WebP, up to 6&nbsp;MB. A new photo replaces the placeholder as soon as you save.</p>
+  </div>
+
+  <div class="savebar">
+    <button class="btn btn-primary" id="save">Save changes</button>
+    <span id="save-msg" class="muted"></span>
+    <span class="spacer"></span>
+    <button class="btn btn-steel" id="changepw">Change password</button>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const CFG = {
+  url: 'https://nkvezionyeeyidhtpjzy.supabase.co',
+  anon: 'sb_publishable_-9l89xivt1ntbMtRetEHmQ_8lEU7qKk',
+  bucket: 'cms-southland-forge',
+  id: 'southland-forge',
+};
+const sb = supabase.createClient(CFG.url, CFG.anon);
+
+const DEFAULTS = {
+  tagline: 'Built tough for Southland conditions',
+  headline: 'Custom steel fabrication, welding & repairs across Southland',
+  pitch: 'On-site structural & heavy-duty welding · Fast response · Serving Southland',
+  phone: '020 493 3531',
+  email: 'southlandforgeengineering@gmail.com',
+  service_area: 'Invercargill · Serving all of Southland',
+  services: [
+    { title: 'Custom Steel Fabrication', desc: 'Custom frames, brackets and one-off builds — including steel + timber feature projects made to your spec.' },
+    { title: 'Farm & Lifestyle Gates', desc: 'Heavy-duty farm gates and sharp modern residential gates, plus hinge repairs and re-hangs that actually last.' },
+    { title: 'Welding & Repairs', desc: 'On-site welding for machinery, rural gear, trailers and more — repairs, mods and modifications done where you are.' },
+    { title: 'Structural Steel', desc: 'Brackets, supports, handrails and stair components — fabricated true, finished clean and built to carry the load.' },
+    { title: 'Industrial Maintenance', desc: "Industrial maintenance and repairs to keep your gear running — with emergency call-outs when a breakdown can't wait." },
+    { title: 'Outdoor Steel', desc: 'Fire pits, outdoor steel builds and feature projects — rugged pieces that look the part and handle Southland weather.' },
+  ],
+  photos: { about: '', gallery0: '', gallery1: '', gallery2: '', gallery3: '', gallery4: '' },
+};
+const PHOTOS = [
+  { key: 'about', label: 'About / workshop photo' },
+  { key: 'gallery0', label: 'Gallery — Gates' },
+  { key: 'gallery1', label: 'Gallery — Welding' },
+  { key: 'gallery2', label: 'Gallery — Fabrication' },
+  { key: 'gallery3', label: 'Gallery — Structural' },
+  { key: 'gallery4', label: 'Gallery — Heavy steel' },
+];
+
+const $ = (id) => document.getElementById(id);
+let state = null, pendingUploads = {};
+
+function show(v){ $('view-login').classList.toggle('hidden', v!=='login'); $('view-editor').classList.toggle('hidden', v!=='editor'); }
+function err(el, msg){ const e=$(el); if(!msg){e.classList.add('hidden');return;} e.textContent=msg; e.classList.remove('hidden'); }
+function deepMerge(base, over){
+  const o = { ...base, ...(over||{}) };
+  o.photos = { ...base.photos, ...((over&&over.photos)||{}) };
+  o.services = base.services.map((s,i)=>({ ...s, ...(((over&&over.services)||[])[i]||{}) }));
+  return o;
+}
+
+$('login-form').addEventListener('submit', async (e) => {
+  e.preventDefault(); err('login-error','');
+  $('login-btn').disabled = true; $('login-btn').textContent = 'Signing in…';
+  const { error } = await sb.auth.signInWithPassword({ email: $('email').value.trim(), password: $('password').value });
+  $('login-btn').disabled = false; $('login-btn').textContent = 'Sign in';
+  if (error) return err('login-error', error.message);
+  boot();
+});
+$('logout').addEventListener('click', async () => { await sb.auth.signOut(); location.reload(); });
+$('changepw').addEventListener('click', async () => {
+  const pw = prompt('New password (min 8 characters):'); if (!pw) return;
+  if (pw.length < 8) return alert('Too short — use at least 8 characters.');
+  const { error } = await sb.auth.updateUser({ password: pw });
+  alert(error ? ('Could not change password: ' + error.message) : 'Password updated.');
+});
+
+async function boot(){
+  const { data:{ session } } = await sb.auth.getSession();
+  if (!session) return show('login');
+  $('who').textContent = session.user.email;
+  show('editor');
+  const { data, error } = await sb.from('cms_content').select('data').eq('id', CFG.id).maybeSingle();
+  if (error) err('editor-error', 'Could not load content: ' + error.message);
+  state = deepMerge(DEFAULTS, (data && data.data) || {});
+  render();
+}
+function render(){
+  $('f-tagline').value = state.tagline || '';
+  $('f-headline').value = state.headline || '';
+  $('f-pitch').value = state.pitch || '';
+  $('f-phone').value = state.phone || '';
+  $('f-email').value = state.email || '';
+  $('f-area').value = state.service_area || '';
+  const sv = $('services'); sv.innerHTML = '';
+  state.services.forEach((s,i) => {
+    const b = document.createElement('div'); b.className = 'svc-block';
+    b.innerHTML =
+      '<label>Service '+(i+1)+' — name</label><input data-svc="'+i+'" data-f="title" type="text">' +
+      '<label>Description</label><textarea data-svc="'+i+'" data-f="desc"></textarea>';
+    sv.appendChild(b);
+    b.querySelector('[data-f="title"]').value = s.title || '';
+    b.querySelector('[data-f="desc"]').value = s.desc || '';
+  });
+  const ph = $('photos'); ph.innerHTML = '';
+  PHOTOS.forEach(({key,label}) => {
+    const row = document.createElement('div'); row.className = 'photo-block';
+    const cur = state.photos[key];
+    const thumb = cur
+      ? '<img class="photo-thumb" data-prev="'+key+'" src="'+cur+'" alt="">'
+      : '<div class="photo-ph" data-prev="'+key+'">'+label.replace('Gallery — ','')+'</div>';
+    row.innerHTML = thumb +
+      '<div class="pf"><div class="name">'+label+'</div>' +
+      '<input type="file" accept="image/*" data-up="'+key+'">' +
+      '<div class="upstate" data-state="'+key+'">'+(cur?'':'Using current site image')+'</div></div>';
+    ph.appendChild(row);
+    row.querySelector('[data-up]').addEventListener('change', (e)=>onPick(key, e.target.files[0]));
+  });
+}
+function onPick(key, file){
+  if (!file) return;
+  pendingUploads[key] = file;
+  const url = URL.createObjectURL(file);
+  const prev = document.querySelector('[data-prev="'+key+'"]');
+  if (prev) {
+    if (prev.tagName === 'IMG') { prev.src = url; }
+    else { const img = document.createElement('img'); img.className='photo-thumb'; img.dataset.prev=key; img.src=url; prev.replaceWith(img); }
+  }
+  document.querySelector('[data-state="'+key+'"]').textContent = 'New photo ready — click Save to publish.';
+}
+
+$('save').addEventListener('click', save);
+async function save(){
+  err('editor-error','');
+  const btn = $('save'); btn.disabled = true; btn.textContent = 'Saving…'; $('save-msg').textContent = '';
+  try {
+    state.tagline = $('f-tagline').value.trim();
+    state.headline = $('f-headline').value.trim();
+    state.pitch = $('f-pitch').value.trim();
+    state.phone = $('f-phone').value.trim();
+    state.email = $('f-email').value.trim();
+    state.service_area = $('f-area').value.trim();
+    document.querySelectorAll('[data-svc]').forEach((el)=>{ state.services[+el.dataset.svc][el.dataset.f] = el.value.trim(); });
+    for (const key of Object.keys(pendingUploads)) {
+      const file = pendingUploads[key];
+      const ext = (file.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g,'') || 'jpg';
+      const path = key + '-' + Date.now() + '.' + ext;
+      $('save-msg').textContent = 'Uploading ' + key + '…';
+      const up = await sb.storage.from(CFG.bucket).upload(path, file, { upsert: true, cacheControl: '3600' });
+      if (up.error) throw new Error('Photo upload failed: ' + up.error.message);
+      state.photos[key] = sb.storage.from(CFG.bucket).getPublicUrl(path).data.publicUrl;
+    }
+    pendingUploads = {};
+    const { error } = await sb.from('cms_content')
+      .upsert({ id: CFG.id, data: state, updated_at: new Date().toISOString() }, { onConflict: 'id' });
+    if (error) throw new Error(error.message);
+    $('save-msg').innerHTML = '✓ Saved — <a href="../" target="_blank">view your live site</a>';
+    document.querySelectorAll('[data-state]').forEach(e => { if(/ready/i.test(e.textContent)) e.textContent=''; });
+  } catch (e) {
+    err('editor-error', e.message); $('save-msg').textContent = '';
+  } finally {
+    btn.disabled = false; btn.textContent = 'Save changes';
+  }
+}
+
+sb.auth.getSession().then(({ data:{ session } }) => session ? boot() : show('login'));
+</script>
+</body>
+</html>
